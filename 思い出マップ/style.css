@@ -1,0 +1,138 @@
+* {
+    box-sizing: border-box;
+ }
+ 
+ .hina-mincho-regular {
+    font-family: "Hina Mincho", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+
+ body {
+   font-family: "Hina Mincho", serif;
+   width: auto;
+    margin: 0;
+    padding: 0;
+   /* font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", メイリオ, Meiryo, "ＭＳ Ｐゴシック", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    */background-color: #e6e6e6;/*#e6e6e6*/
+ }
+
+ header {
+    width: 100%;
+    padding: 30px 4% 10px;
+    background-color: #cdba76;
+    /*position: fixed;
+    top: 0;*/
+    display: flex;
+    align-items: center;
+}
+
+ h1 {
+    font-family: "Hina Mincho", serif;
+    margin: 0; padding: 0;
+    font-size: 30px;
+ }
+
+ a {	
+    text-decoration: none;
+    color: #4b4b4b;
+ }
+
+ ul {
+    list-style: none;
+    margin: 0;
+    display: flex;
+ }
+
+ li {
+    margin: 0 0 0 15px;
+    font-size: 20px;
+ }
+
+ p {
+   display: inline-block;
+   padding-right:  50px;  
+   padding-left: 50px;  
+ }
+
+ nav {
+    margin: 0 0 0 auto;
+ }
+
+ .box{
+   /*max-width:500px;*/
+   font-family: "Hina Mincho", serif;
+   width:100%;
+   margin: 10px 0;
+   padding: 20px;
+   background:#ffffff;
+   text-align: center;
+ }
+
+ .count-size{
+   font-size:3rem;
+   font-weight: bold;
+   color: #252C8C;
+ }
+ 
+ .my-map{
+   background-color: rgb(101, 223, 237);
+ }
+
+.hide-area{
+	display: none;
+}
+
+.modaal-close:after, 
+.modaal-close:before{
+	background:#ccc;	
+}
+
+.modaal-close:focus:after,
+.modaal-close:focus:before,
+.modaal-close:hover:after,
+.modaal-close:hover:before{
+	background:#666;
+}
+
+.frame{ 
+   max-width: 100%;
+   border-top: 20px solid #B37D4D;    
+   border-right: 20px solid #B37D4D;  
+   border-bottom: 20px solid #D2AE7E; 
+   border-left: 20px solid #D2AE7E;   
+   box-shadow: 10px 10px 4px #3a3a3a;  
+   display: inline-block;            
+   margin: 8%;
+ }
+ 
+ .gnavi li a{
+   /*線の基点とするためrelativeを指定*/
+  position: relative;
+}
+
+.gnavi li.current a,
+.gnavi li a:hover{
+  color:#ffffff;
+}
+
+.gnavi li a::after {
+   content: '';
+   /*絶対配置で線の位置を決める*/
+   position: absolute;
+   bottom: 0;
+   left: 10%;
+   /*線の形状*/
+   width: 80%;
+   height: 2px;
+   background:#ffffff;
+   /*アニメーションの指定*/
+   transition: all .3s;
+   transform: scale(0, 1);/*X方向0、Y方向1*/
+   transform-origin: center top;/*上部中央基点*/
+}
+ 
+#info-1{
+   font-family: "Hina Mincho", serif;
+}

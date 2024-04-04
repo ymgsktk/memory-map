@@ -69,8 +69,8 @@ $(function(){
             area[i].color = "gray"
             i++
         }else{
-            area[i].hoverColor = "#dc143c"
-            area[i].color = "red"
+            area[i].hoverColor = "darkgreen"
+            area[i].color = "green"
             i++
         }
     }
@@ -367,4 +367,72 @@ $(function(){
             }
       });
 });
+
+$('#box1').on('inview', function(event, isInView) {
+	if (isInView) {
+        var array_find = JSON.parse(localStorage.getItem("myArray2"))
+        let count_find = Object.values(array_find).filter(value => value === 1).length;
+        let countdown_find = 47-count_find
+		//要素が見えたときに実行する処理
+		$("#box1 .count-up").each(function(){
+			$(this).prop('Counter',0).animate({//0からカウントアップ
+		        Counter: count_find
+		    }, {
+				// スピードやアニメーションの設定
+		        duration: 1500,//数字が大きいほど変化のスピードが遅くなる。2000=2秒
+		        easing: 'easeOutQuad',//動きの種類。他にもlinearなど設定可能
+		        step: function (now) {
+		            $(this).text(Math.ceil(now));
+		        }
+		    },animation);
+            function animation(){{
+                $('#box1').animate({
+                    top:100,
+                    width:1000
+                },1000,"swing");
+            }}
+		});
+
+        $("#box1 .count-down").each(function(){
+			$(this).prop('Counter',47).animate({//0からカウントアップ
+		        Counter: countdown_find
+		    }, {
+				// スピードやアニメーションの設定
+		        duration: 1500,//数字が大きいほど変化のスピードが遅くなる。2000=2秒
+		        easing: 'easeOutQuad',//動きの種類。他にもlinearなど設定可能
+		        step: function (now) {
+		            $(this).text(Math.ceil(now));
+		        }
+		    },animation);
+            function animation(){{
+                $('#box1').animate({
+                    top:100,
+                    width:1000
+                },1000,"swing");
+            }}
+		});
+	}
+});
+
+
+
+var access = $.cookie('access')
+	if(!access){
+		flag = true;
+		$.cookie('access', false);
+	}else{
+		flag = false	
+	}
+	
+	//モーダル表示
+	$(".modaal-open").modaal({
+	start_open:false, // ページロード時に表示するか
+	overlay_close:true,//モーダル背景クリック時に閉じるか
+	before_open:function(){// モーダルが開く前に行う動作
+		$('html').css('overflow-y','hidden');/*縦スクロールバーを出さない*/
+	},
+	after_close:function(){// モーダルが閉じた後に行う動作
+		$('html').css('overflow-y','scroll');/*縦スクロールバーを出す*/
+	}
+	});
 
