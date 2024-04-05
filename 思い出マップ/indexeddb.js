@@ -1,3 +1,4 @@
+//edit.htmlにおいて画像をindexeddbに保存する機能を持つファイル
 document.addEventListener("DOMContentLoaded", function() {
   openDBAndSaveImage();
 });
@@ -20,8 +21,7 @@ function openDBAndSaveImage() {
 
   request.onupgradeneeded = function(event) {
     const db = event.target.result;
-    // オブジェクトストアを作成
-    const objectStore = db.createObjectStore(STORE_NAME, { keyPath: "id", autoIncrement:true });
+    const objectStore = db.createObjectStore(STORE_NAME, { keyPath: "id", autoIncrement: true });
   };
 }
 
@@ -76,17 +76,37 @@ function addImage(db, blob) {
 function displayImages(db) {
   const STORE_NAME = "images";
   const objectStore = db.transaction(STORE_NAME).objectStore(STORE_NAME);
-  document.getElementById('imageContainer').innerHTML = '';
+  const imageContainer = document.getElementById('imageContainer');
+      imageContainer.innerHTML = '';
 
   objectStore.openCursor().onsuccess = function(event) {
     const cursor = event.target.result;
+    
     if (cursor) {
       const imageData = cursor.value.image;
+      const parent_ele = document.getElementById('cards')
+    
+      const imageDiv = document.createElement('div');
+      imageDiv.className = 'card';
+      const pictureDiv = document.createElement('div');
+      pictureDiv.className = 'picture';
       const imageElement = document.createElement('img');
       imageElement.src = URL.createObjectURL(imageData); // Blob URL を使用して画像を表示
-      imageElement.style.maxWidth = '200px';
-      document.getElementById('imageContainer').appendChild(imageElement);
+
+      parent_ele.appendChild(imageDiv);
+      imageDiv.appendChild(pictureDiv)
+      pictureDiv.appendChild(imageElement);
+      parent.appendChild(imageDiv);
+
+
       cursor.continue();
+      imageElement.onclick = function() {
+        // 画像をクリックした時の処理（画像の削除）
+        if (confirm("画像を削除しますか？")) {
+          alert(cursor.key)
+          deleteImage(cursor.key,db); // 画像を削除して表示を更新
+        }
+      };
     }
   };
 }
@@ -108,4 +128,18 @@ function dataURItoBlob(dataURI) {
 
   // Uint8ArrayをBlobに変換
   return new Blob([byteArray], { type: 'image/jpeg' }); // ここで画像のMIMEタイプを適切なものに置き換える必要があります
+}
+
+// 画像を削除する関数
+function deleteImage(key,db) {
+  const transaction = db.transaction(["images"], "readwrite");
+  const objectStore = transaction.objectStore("images");
+  const request = objectStore.delete(key);
+  request.onsuccess = function(event) {
+    console.log("Image deleted from the database");
+    displayImages(db); // 画像を表示する
+  };
+  request.onerror = function(event) {
+    console.error("Error deleting image from the database: " + event.target.errorCode);
+  };
 }

@@ -368,6 +368,11 @@ $(function(){
       });
 });
 
+
+$('.edit').click(function() {
+    window.location.href='edit.html'
+  });
+
 $('#box1').on('inview', function(event, isInView) {
 	if (isInView) {
         var array_find = JSON.parse(localStorage.getItem("myArray2"))
@@ -394,7 +399,7 @@ $('#box1').on('inview', function(event, isInView) {
 		});
 
         $("#box1 .count-down").each(function(){
-			$(this).prop('Counter',47).animate({//0からカウントアップ
+			$(this).prop('Counter',0).animate({//0からカウントアップ
 		        Counter: countdown_find
 		    }, {
 				// スピードやアニメーションの設定
