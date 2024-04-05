@@ -64,7 +64,8 @@ function addImage(db, blob) {
 
   request.onsuccess = function(event) {
     console.log("Image added to the database");
-    displayImages(db); // 画像を表示する
+    window.location.href='memory.html'
+   // displayImages(db); // 画像を表示する
   };
 
   request.onerror = function(event) {
@@ -93,13 +94,6 @@ function displayImages(db) {
       const imageElement = document.createElement('img');
       imageElement.src = URL.createObjectURL(imageData); // Blob URL を使用して画像を表示
 
-      parent_ele.appendChild(imageDiv);
-      imageDiv.appendChild(pictureDiv)
-      pictureDiv.appendChild(imageElement);
-      parent.appendChild(imageDiv);
-
-
-      cursor.continue();
       imageElement.onclick = function() {
         // 画像をクリックした時の処理（画像の削除）
         if (confirm("画像を削除しますか？")) {
@@ -107,6 +101,11 @@ function displayImages(db) {
           deleteImage(cursor.key,db); // 画像を削除して表示を更新
         }
       };
+      parent_ele.appendChild(imageDiv);
+      imageDiv.appendChild(pictureDiv)
+      pictureDiv.appendChild(imageElement);
+     // parent.appendChild(imageDiv);
+      cursor.continue();
     }
   };
 }
