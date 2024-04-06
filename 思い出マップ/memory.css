@@ -107,12 +107,24 @@
    font-family: "Hina Mincho", serif;
 }
 
-#cards {
+.parent {
+
     display: flex;
     justify-content: center;
+
   }
 
-.card {
+  .parent2 {
+    display: flex;
+    justify-content: center;
+
+  }
+  .parent3 {
+    display: flex;
+    justify-content: center;
+ 
+  }
+.image {
     margin: 15px;
     width: 300px;
     height: 315px;
@@ -120,7 +132,13 @@
 }
 
 .picture img {
+    display: block;
+    height: 150px;
+    object-fit: cover;
     margin: 3%;
     width: 94%;
-    height: 100%;
+    /*max-width: auto;
+    margin: 3%;
+    width: 94%;
+    max-height: auto;*/
   }

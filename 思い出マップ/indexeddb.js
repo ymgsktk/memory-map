@@ -75,6 +75,7 @@ function addImage(db, blob) {
 
 // 保存された画像を表示する関数（IndexedDB データベースを開いた後に呼び出される）
 function displayImages(db) {
+  var count = 0;
   const STORE_NAME = "images";
   const objectStore = db.transaction(STORE_NAME).objectStore(STORE_NAME);
   const imageContainer = document.getElementById('imageContainer');
@@ -84,16 +85,19 @@ function displayImages(db) {
     const cursor = event.target.result;
     
     if (cursor) {
-      const imageData = cursor.value.image;
-      const parent_ele = document.getElementById('cards')
-    
+      let keys = 'parent2'
+      let i = 2
+      if(count<4){
+        let imageData = cursor.value.image;
+      let parent_ele = document.getElementsByClassName('parent');
+      let parentDiv = document.createElement('div');
+      parentDiv.className = keys;
       const imageDiv = document.createElement('div');
-      imageDiv.className = 'card';
+      imageDiv.className = 'image';
       const pictureDiv = document.createElement('div');
       pictureDiv.className = 'picture';
       const imageElement = document.createElement('img');
       imageElement.src = URL.createObjectURL(imageData); // Blob URL を使用して画像を表示
-
       imageElement.onclick = function() {
         // 画像をクリックした時の処理（画像の削除）
         if (confirm("画像を削除しますか？")) {
@@ -101,11 +105,93 @@ function displayImages(db) {
           deleteImage(cursor.key,db); // 画像を削除して表示を更新
         }
       };
+      if(count===3){
+        let br = document.createElement('br')
+        parent_ele[0].after(br)
+        br.after(parentDiv);
+      }
+        parent_ele[0].appendChild(imageDiv)
+        imageDiv.appendChild(pictureDiv)
+        pictureDiv.appendChild(imageElement);
+        count++;
+  
+      cursor.continue();
+      }else if(count<8){
+        let imageData = cursor.value.image;
+        let parent_ele = document.getElementsByClassName('parent2');
+        let parentDiv = document.createElement('div');
+        parentDiv.className = 'parent3';
+        const imageDiv = document.createElement('div');
+        imageDiv.className = 'image';
+        const pictureDiv = document.createElement('div');
+        pictureDiv.className = 'picture';
+        const imageElement = document.createElement('img');
+        imageElement.src = URL.createObjectURL(imageData); // Blob URL を使用して画像を表示
+        imageElement.onclick = function() {
+          // 画像をクリックした時の処理（画像の削除）
+          if (confirm("画像を削除しますか？")) {
+            alert(cursor.key)
+            deleteImage(cursor.key,db); // 画像を削除して表示を更新
+          }
+        };
+        if(count===7){
+          let br = document.createElement('br')
+          parent_ele[0].after(br)
+          br.after(parentDiv);
+          i++;
+          //alert(i)
+        }
+          parent_ele[0].appendChild(imageDiv)
+          imageDiv.appendChild(pictureDiv)
+          pictureDiv.appendChild(imageElement);
+          count++;
+        cursor.continue();
+      }else if(count<12){
+        let imageData = cursor.value.image;
+        let parent_ele = document.getElementsByClassName('parent3');
+        let parentDiv = document.createElement('div');
+        parentDiv.className = 'parent4';
+        const imageDiv = document.createElement('div');
+        imageDiv.className = 'image';
+        const pictureDiv = document.createElement('div');
+        pictureDiv.className = 'picture';
+        const imageElement = document.createElement('img');
+        imageElement.src = URL.createObjectURL(imageData); // Blob URL を使用して画像を表示
+        imageElement.onclick = function() {
+          // 画像をクリックした時の処理（画像の削除）
+          if (confirm("画像を削除しますか？")) {
+            alert(cursor.key)
+            deleteImage(cursor.key,db); // 画像を削除して表示を更新
+          }
+        };
+        if(count===11){
+          let br = document.createElement('br')
+          parent_ele[0].after(br)
+          br.after(parentDiv);
+        }
+          parent_ele[0].appendChild(imageDiv)
+          imageDiv.appendChild(pictureDiv)
+          pictureDiv.appendChild(imageElement);
+          count++;
+        cursor.continue();
+      }
+
+
+/*
+      if(count%4 === 0 && count != 0){
+        let br = document.createElement('br');
+        parent_ele.appendChild(br);
+        let br_class = document.createElement('div');
+        br_class.className = 'card'
+        parent_ele.appendChild(br_class);
+      }
       parent_ele.appendChild(imageDiv);
       imageDiv.appendChild(pictureDiv)
       pictureDiv.appendChild(imageElement);
+      
      // parent.appendChild(imageDiv);
-      cursor.continue();
+      count++ 
+      cursor.continue();*/
     }
   };
 }
