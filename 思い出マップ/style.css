@@ -104,7 +104,10 @@
    border-left: 20px solid #D2AE7E;   
    box-shadow: 10px 10px 4px #3a3a3a;  
    display: inline-block;            
-   margin: 8%;
+   margin-left: 8%;
+   margin-right: 8%;
+   margin-bottom: 8%;
+   margin-top: 10px;
  }
  
  .gnavi li a{
@@ -135,4 +138,10 @@
  
 #info-1{
    font-family: "Hina Mincho", serif;
+}
+
+#midasi{
+   margin-top: 30px;
+   font-size: 50px;
+   text-align: center;
 }

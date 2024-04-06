@@ -27,37 +27,52 @@ function openDBAndSaveImage() {
 
 // 画像を保存する関数
 function saveImage() {
+  //まず日付やメモ、画像があるかどうか確認
+  const check_str = document.getElementById('memo')
+  const check_date = document.getElementById('date')
+  const error_str = document.getElementById('errordate')
+  const error_date = document.getElementById('errormemo')
+  if(check_date.value == ""|| check_str.value == ""){
+    error_date.textContent = '※入力必須項目です'
+    return
+  }
+  //ここから画像の保存
   const dbRequest = indexedDB.open("imageDB");
   dbRequest.onsuccess = function(event) {
     const db = dbRequest.result;
     const fileInput = document.getElementById("inputfile");
     const file = fileInput.files[0];
-    
+    const stringsInput = document.getElementById("memo")
+    const strings = stringsInput.value
+    const dateInput = document.getElementById('date')
+    const date = dateInput.value
     if (file) {
       // ファイルを読み込む
+      
       const reader = new FileReader();
       reader.onload = function(e) {
         const imageData = e.target.result;
         // Base64エンコードされた画像データをBlobに変換
         const blob = dataURItoBlob(imageData);
-        addImage(db, blob); // 画像を追加して表示を更新
+        addImage(db, blob,strings, date); // 画像を追加して表示を更新
         fileInput.value = ''; // フォームをクリアする
       };
       reader.readAsDataURL(file);
     }
+
+
+
   };
 }
-
-
 // 画像をデータベースに追加する関数
-function addImage(db, blob) {
+function addImage(db, blob,strings,date) {
   const DB_NAME = "imageDB";
   const STORE_NAME = "images";
   const transaction = db.transaction([STORE_NAME], "readwrite");
   const objectStore = transaction.objectStore(STORE_NAME);
 
   // データを作成
-  const data = { image: blob };
+  const data = { image: blob ,STRINGS : strings, DATE : date};
 
   // オブジェクトストアにデータを追加
   const request = objectStore.add(data);
@@ -73,50 +88,73 @@ function addImage(db, blob) {
   };
 }
 
-// 保存された画像を表示する関数（IndexedDB データベースを開いた後に呼び出される）
+// 保存された画像を表示する関数（memory.htmlを開いた後に呼び出される）
 function displayImages(db) {
   var count = 0;
   const STORE_NAME = "images";
-  const objectStore = db.transaction(STORE_NAME).objectStore(STORE_NAME);
-  const imageContainer = document.getElementById('imageContainer');
-      imageContainer.innerHTML = '';
+  const STORE_NAME2 = "strings";
+  const objectStore_image = db.transaction(STORE_NAME).objectStore(STORE_NAME);
+  const objectStore_str = db.transaction(STORE_NAME2).objectStore(STORE_NAME2);
+  //const imageContainer = document.getElementById('imageContainer');
+   //   imageContainer.innerHTML = '';
 
-  objectStore.openCursor().onsuccess = function(event) {
+  objectStore_image.openCursor().onsuccess= function(event) {
     const cursor = event.target.result;
     
     if (cursor) {
-      let keys = 'parent2'
-      let i = 2
       if(count<4){
+        let dateData = cursor.value.DATE
+        let strData = cursor.value.STRINGS;
         let imageData = cursor.value.image;
-      let parent_ele = document.getElementsByClassName('parent');
-      let parentDiv = document.createElement('div');
-      parentDiv.className = keys;
-      const imageDiv = document.createElement('div');
-      imageDiv.className = 'image';
-      const pictureDiv = document.createElement('div');
-      pictureDiv.className = 'picture';
-      const imageElement = document.createElement('img');
-      imageElement.src = URL.createObjectURL(imageData); // Blob URL を使用して画像を表示
-      imageElement.onclick = function() {
+        let parent_ele = document.getElementsByClassName('parent');
+        let parentDiv = document.createElement('div');
+        parentDiv.className = 'parent2';
+        const imageDiv = document.createElement('div');
+        imageDiv.className = 'image';
+        const pictureDiv = document.createElement('div');
+        pictureDiv.className = 'picture';
+        const imageElement = document.createElement('img');
+        imageElement.src = URL.createObjectURL(imageData); // Blob URL を使用して画像を表示
+        imageElement.setAttribute('data-key', cursor.key);
+
+        const desDiv = document.createElement('div');
+        desDiv.className = 'date_des';
+        const dateElement = document.createElement('p');
+        dateElement.className = 'date'
+        dateElement.textContent = dateData
+        const desElement = document.createElement('p');
+        desElement.className = 'des'
+        desElement.textContent = strData
+
+        imageElement.onclick = function(events) {
         // 画像をクリックした時の処理（画像の削除）
         if (confirm("画像を削除しますか？")) {
-          alert(cursor.key)
-          deleteImage(cursor.key,db); // 画像を削除して表示を更新
+          const key = this.getAttribute('data-key'); // data-key 属性から key を取得
+          // IndexedDB からオブジェクトを削除する処理
+          const transaction = db.transaction(["images"], "readwrite");
+          const objectStore = transaction.objectStore("images");
+          const request = objectStore.delete(Number(key)); // key を数値に変換して渡す
+          location.reload(); 
         }
-      };
-      if(count===3){
-        let br = document.createElement('br')
-        parent_ele[0].after(br)
-        br.after(parentDiv);
-      }
+        }
+
+        if(count===3){
+          let br = document.createElement('br')
+          parent_ele[0].after(br)
+          br.after(parentDiv);
+        }
         parent_ele[0].appendChild(imageDiv)
         imageDiv.appendChild(pictureDiv)
         pictureDiv.appendChild(imageElement);
+        pictureDiv.appendChild(desDiv)
+        desDiv.appendChild(dateElement)
+        desDiv.appendChild(desElement)
         count++;
-  
-      cursor.continue();
+        cursor.continue();
+
       }else if(count<8){
+        let dateData = cursor.value.DATE
+        let strData = cursor.value.STRINGS;
         let imageData = cursor.value.image;
         let parent_ele = document.getElementsByClassName('parent2');
         let parentDiv = document.createElement('div');
@@ -127,26 +165,45 @@ function displayImages(db) {
         pictureDiv.className = 'picture';
         const imageElement = document.createElement('img');
         imageElement.src = URL.createObjectURL(imageData); // Blob URL を使用して画像を表示
-        imageElement.onclick = function() {
+        imageElement.setAttribute('data-key', cursor.key);
+
+        const desDiv = document.createElement('div');
+        desDiv.className = 'date_des';
+        const dateElement = document.createElement('p');
+        dateElement.className = 'date'
+        dateElement.textContent = dateData
+        const desElement = document.createElement('p');
+        desElement.className = 'des'
+        desElement.textContent = strData
+
+        imageElement.onclick = function(events) {
           // 画像をクリックした時の処理（画像の削除）
           if (confirm("画像を削除しますか？")) {
-            alert(cursor.key)
-            deleteImage(cursor.key,db); // 画像を削除して表示を更新
+            const key = this.getAttribute('data-key'); // data-key 属性から key を取得
+ 
+            // IndexedDB からオブジェクトを削除する処理
+            const transaction = db.transaction(["images"], "readwrite");
+            const objectStore = transaction.objectStore("images");
+            const request = objectStore.delete(Number(key)); // key を数値に変換して渡す
+            location.reload(); 
           }
-        };
+          }
         if(count===7){
           let br = document.createElement('br')
           parent_ele[0].after(br)
           br.after(parentDiv);
-          i++;
-          //alert(i)
         }
-          parent_ele[0].appendChild(imageDiv)
-          imageDiv.appendChild(pictureDiv)
-          pictureDiv.appendChild(imageElement);
-          count++;
+        parent_ele[0].appendChild(imageDiv)
+        imageDiv.appendChild(pictureDiv)
+        pictureDiv.appendChild(imageElement);
+        pictureDiv.appendChild(desDiv)
+        desDiv.appendChild(dateElement)
+        desDiv.appendChild(desElement)
+        count++;
         cursor.continue();
       }else if(count<12){
+        let dateData = cursor.value.DATE
+        let strData = cursor.value.STRINGS;
         let imageData = cursor.value.image;
         let parent_ele = document.getElementsByClassName('parent3');
         let parentDiv = document.createElement('div');
@@ -157,44 +214,48 @@ function displayImages(db) {
         pictureDiv.className = 'picture';
         const imageElement = document.createElement('img');
         imageElement.src = URL.createObjectURL(imageData); // Blob URL を使用して画像を表示
-        imageElement.onclick = function() {
+        imageElement.setAttribute('data-key', cursor.key);
+
+        const desDiv = document.createElement('div');
+        desDiv.className = 'date_des';
+        const dateElement = document.createElement('p');
+        dateElement.className = 'date'
+        dateElement.textContent = dateData
+        const desElement = document.createElement('p');
+        desElement.className = 'des'
+        desElement.textContent = strData
+
+        imageElement.onclick = function(events) {
           // 画像をクリックした時の処理（画像の削除）
           if (confirm("画像を削除しますか？")) {
-            alert(cursor.key)
-            deleteImage(cursor.key,db); // 画像を削除して表示を更新
+            const key = this.getAttribute('data-key'); // data-key 属性から key を取得
+
+            // IndexedDB からオブジェクトを削除する処理
+            const transaction = db.transaction(["images"], "readwrite");
+            const objectStore = transaction.objectStore("images");
+            const request = objectStore.delete(Number(key)); // key を数値に変換して渡す
+            location.reload(); 
           }
-        };
+          }
         if(count===11){
           let br = document.createElement('br')
           parent_ele[0].after(br)
           br.after(parentDiv);
         }
-          parent_ele[0].appendChild(imageDiv)
-          imageDiv.appendChild(pictureDiv)
-          pictureDiv.appendChild(imageElement);
-          count++;
+        parent_ele[0].appendChild(imageDiv)
+        imageDiv.appendChild(pictureDiv)
+        pictureDiv.appendChild(imageElement);
+        pictureDiv.appendChild(desDiv)
+        desDiv.appendChild(dateElement)
+        desDiv.appendChild(desElement)
+        count++;
         cursor.continue();
       }
-
-
-/*
-      if(count%4 === 0 && count != 0){
-        let br = document.createElement('br');
-        parent_ele.appendChild(br);
-        let br_class = document.createElement('div');
-        br_class.className = 'card'
-        parent_ele.appendChild(br_class);
-      }
-      parent_ele.appendChild(imageDiv);
-      imageDiv.appendChild(pictureDiv)
-      pictureDiv.appendChild(imageElement);
-      
-     // parent.appendChild(imageDiv);
-      count++ 
-      cursor.continue();*/
     }
-  };
-}
+  }
+};
+
+
 
 // Data URIをBlobに変換する関数
 function dataURItoBlob(dataURI) {
