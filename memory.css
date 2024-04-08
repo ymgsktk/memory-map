@@ -1,0 +1,225 @@
+* {
+    box-sizing: border-box;
+ }
+ 
+ .hina-mincho-regular {
+    font-family: "Hina Mincho", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+
+ body {
+   font-family: "Hina Mincho", serif;
+   max-width: auto;
+    margin: 0;
+    padding: 0;
+   /* font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", メイリオ, Meiryo, "ＭＳ Ｐゴシック", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    */background-color: #e6e6e6;/*#e6e6e6*/
+ }
+
+ header {
+    width: 100%;
+    padding: 30px 4% 10px;
+    background-color: #cdba76;
+    /*position: fixed;
+    top: 0;*/
+    display: flex;
+    align-items: center;
+}
+
+ h1 {
+    font-family: "Hina Mincho", serif;
+    margin: 0; padding: 0;
+    font-size: 30px;
+    text-align: center;
+ }
+
+ h2 {
+    font-family: "Hina Mincho", serif;
+    margin-top: 30px;
+    font-size: 30px;
+    text-align: center;
+ }
+ a {	
+    text-decoration: none;
+    color: #4b4b4b;
+ }
+
+ ul {
+    list-style: none;
+    margin: 0;
+    display: flex;
+ }
+
+ li {
+    margin: 0 0 0 15px;
+    font-size: 20px;
+ }
+
+ p #modal1 {
+   display: inline-block;
+   padding-right:  50px;  
+   padding-left: 50px;  
+ }
+
+ p.des {
+    padding-right:  15px;  
+    padding-left: 15px;  
+ }
+ p.date{
+    padding-right:  15px;  
+    padding-left: 15px;  
+ }
+
+ nav {
+    margin: 0 0 0 auto;
+ }
+
+.hide-area{
+	display: none;
+}
+
+.modaal-close:after, 
+.modaal-close:before{
+	background:#ccc;	
+}
+
+.modaal-close:focus:after,
+.modaal-close:focus:before,
+.modaal-close:hover:after,
+.modaal-close:hover:before{
+	background:#666;
+}
+
+ .gnavi li a{
+   /*線の基点とするためrelativeを指定*/
+  position: relative;
+}
+
+.gnavi li.current a,
+.gnavi li a:hover{
+  color:#ffffff;
+}
+
+.gnavi li a::after {
+   content: '';
+   /*絶対配置で線の位置を決める*/
+   position: absolute;
+   bottom: 0;
+   left: 10%;
+   /*線の形状*/
+   width: 80%;
+   height: 2px;
+   background:#ffffff;
+   /*アニメーションの指定*/
+   transition: all .3s;
+   transform: scale(0, 1);/*X方向0、Y方向1*/
+   transform-origin: center top;/*上部中央基点*/
+}
+ 
+#info-1{
+   font-family: "Hina Mincho", serif;
+}
+
+.parent {
+
+    display: flex;
+    justify-content: center;
+
+  }
+
+  .parent2 {
+    display: flex;
+    justify-content: center;
+
+  }
+  .parent3 {
+    display: flex;
+    justify-content: center;
+ 
+  }
+.image {
+    margin: 10px;
+    width: 300px;
+    height: 315px;
+    background-color: #ffffff;
+    box-shadow: 10px 10px 4px #747474;  
+}
+
+.picture img {
+    display: block;
+    height: 150px;
+    object-fit: cover;
+    margin: 3%;
+    width: 94%;
+    /*max-width: auto;
+    margin: 3%;
+    width: 94%;
+    max-height: auto;*/
+  }
+
+
+#errormemo { 
+    margin-left: 5px;
+    color: #ff0000;
+}
+
+.date_des{
+    height: 140px;
+    overflow: auto;
+}
+
+#memo{
+    display: inline-block;
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #999;
+    box-sizing: border-box;
+    background: #f2f2f2;
+    margin: 0;
+    line-height: 1.5;
+    height: 6em;
+}
+
+#background{
+    border-radius: 10px;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: 0px;
+    padding-bottom: 10px;
+    background-color: #f6f1de;
+    text-align: center;
+}
+
+#INPUTFILE{
+    margin: 0 auto;
+    padding: 10px 40px;
+    color: #ffffff;
+    background-color: #384878;
+    cursor: pointer;
+    
+}
+
+input[type="file"] {
+    display: none;
+}
+
+#input{
+    margin: 40px;
+    display: inline-block;
+}
+
+#saveButton{
+    display: none;
+}
+
+#UPLOAD{
+    margin-left: 30px;
+    margin-bottom:15px;
+    cursor: pointer;
+}
+
+#input2{
+    margin-bottom: 0px;
+}

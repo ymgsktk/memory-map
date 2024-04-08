@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>japan-map</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hina+Mincho&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/css/modaal.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<header>
+  <h1>
+      <a href="file:///C:/Users/8ymgs/OneDrive/Desktop/%E6%80%9D%E3%81%84%E5%87%BA%E3%83%9E%E3%83%83%E3%83%97/index.html">思い出マップ</a>
+  </h1>
+  <nav class="pc-nav">
+      <ul class="gnavi">
+          <li><a href="#info-1"class="modaal-open">ABOUT</a></li>
+          <li><a href="#info-2"class="modaal-open">USAGE</a></li>
+          <li><a href="#">COMPANY</a></li>
+          <li><a href="#">CONTACT</a></li>
+      </ul>
+  </nav>
+</header>
+<body ondrop="onDrop(event);" ondragover="onDragOver(event);" style="background:#ddd;">
+    <section id="info-1" class="hide-area">
+      <h2>思い出マップの使い方</h2>
+      <p>1.「思い出マップ」は訪れたことのある都道府県の思い出を記録するアプリです</p>
+      <p>2. 訪れたことのある都道府県をクリックしてその都道府県に関する思い出を記録していきます</p>
+      <p>3. 日本地図で灰色は未訪問，緑色は訪問済みを表しています</p>
+      <p>4. 日本地図を全て埋めて，コンプリートを目指そう！</p>
+  </section>
+    <section id="info-2" class="hide-area">
+      <h2>思い出マップの記録方法</h2>
+      <p id="modal1">1. 　地図の都道府県をクリックすると，都道府県ごとに思い出の写真を記録しておくことができます</p>
+      <p id="modal1">2. 　画面下部の『思い出を書き留める』より記録したい写真を選択し，日付とメモを設定します</p>
+      <p id="modal1">3. 　紙飛行機アイコンをクリックすることでギャラリーに記録することができます</p>
+      <p id="modal1">4. 　ギャラリーの画像部分をクリックすると記録を削除できます</p>
+      <p id="modal1">5. 　『この内容で記録』ボタンをクリックすることで，その都道府県に訪れたことを記録します</p>
+    </section>
+    <div id="box1" class="box">
+        <p>訪れた都道府県数<br><span class="count-up count-size"></span>/ 47<p>コンプリートまであと<br><span class="count-down count-size"></span>個</p>
+    </div>
+    <h1 id="midasi">～思い出記録マップ～</h1>
+    <div class="frame">
+        <div class="my-map"></div>
+    </div>
+    <div id="button_box">
+        <button type="button" class="editbutton" id="alldelete">全消去</button>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/js/modaal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+    <script src="jquery.japan-map.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/protonet-jquery.inview/1.1.2/jquery.inview.min.js"></script>
+    <script src = "japan-map.js"></script>
+</body>
+</html>
