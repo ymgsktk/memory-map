@@ -28,10 +28,14 @@ function openDBAndSaveImage() {
 // 画像を保存する関数
 function saveImage() {
   //まず日付やメモ、画像があるかどうか確認
+  const visit_count = document.getElementById('count')
   const check_str = document.getElementById('memo')
   const check_date = document.getElementById('date')
   const error_str = document.getElementById('errordate')
   const error_date = document.getElementById('errormemo')
+  let visit = visit_count.value
+  const visitCountElement = document.getElementById('visit-count');
+        visitCountElement.textContent = visit;
   if(check_date.value == ""|| check_str.value == ""){
     error_date.textContent = '※入力必須項目です'
     return
@@ -103,6 +107,7 @@ function displayImages(db) {
     
     if (cursor) {
       if(count<4){
+        
         let dateData = cursor.value.DATE
         let strData = cursor.value.STRINGS;
         let imageData = cursor.value.image;

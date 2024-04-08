@@ -12,7 +12,7 @@
 </head>
 <header>
   <h1>
-      <a href="file:///C:/Users/8ymgs/OneDrive/Desktop/%E6%80%9D%E3%81%84%E5%87%BA%E3%83%9E%E3%83%83%E3%83%97/index.html">思い出マップ</a>
+      <a href="file:///C:/Users/8ymgs/OneDrive/Desktop/%E6%80%9D%E3%81%84%E5%87%BA%E3%83%9E%E3%83%83%E3%83%97/index.html">思い出マップ</a><!--https://ymgsktk.github.io/memory-map/memory.html-->
   </h1>
   <nav class="pc-nav">
       <ul class="gnavi">
@@ -39,7 +39,7 @@
     <p id="modal1">4. 　ギャラリーの画像部分をクリックすると記録を削除できます</p>
     <p id="modal1">5. 　『この内容で記録』ボタンをクリックすることで，その都道府県に訪れたことを記録します</p>
   </section>
-  <h1>北海道の旅行記録&nbsp;<span class="visit-count"></span>&nbsp;回</h1>
+  <h1>北海道の旅行記録&nbsp;<span id="visit-count">0</span>&nbsp;回</h1>
   <div class="parent">
   </div>
 
@@ -52,6 +52,13 @@
   <label id="INPUTFILE"><input type="file" id="inputfile" accept="image/jpeg,image/png,image/gif,image/bmp,image/x-icon">ファイル選択</label>
   <img id="img_source" style="display:none;">
   <input type="date" id="date"/>
+  <select id="count">
+    <option value="1">1回</option>
+    <option value="2">2回</option>
+    <option value="3">3回</option>
+    <option value="4">4回</option>
+    <option value="more5">5回以上</option>
+    </select>
   </div>
   <div id="input2">
   <textarea type="text" id="memo" required></textarea><span id="errormemo"></span>
