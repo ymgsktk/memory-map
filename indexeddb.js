@@ -1,32 +1,46 @@
-//edit.htmlにおいて画像をindexeddbに保存する機能を持つファイル
 document.addEventListener("DOMContentLoaded", function() {
   openDBAndSaveImage();
 });
 
 function openDBAndSaveImage() {
-  const DB_NAME = "imageDB";
-  const STORE_NAME = "images";
+  let prebox = ""
+  var array = JSON.parse(localStorage.getItem("myArray3"))
+                for (var k in array){
+                    if(array[k]==true){
+                      prebox=k   //preboxでユーザが今訪問してる県のページのキーを取得               
+                    }
+                  }
+  let DB_NAME = prebox;
+  let STORE_NAME = "images";
 
-  const request = indexedDB.open(DB_NAME, 1);
+  let request = indexedDB.open(DB_NAME, 1);
 
   request.onerror = function(event) {
     console.error("Database error: " + event.target.errorCode);
   };
 
-  request.onsuccess = function(event) {
-    console.log("Database opened successfully");
-    const db = event.target.result;
-    displayImages(db); // 保存された画像を表示
+  request.onupgradeneeded = function(event) {
+    let db = event.target.result;
+    let objectStore = db.createObjectStore(STORE_NAME, { keyPath: "id", autoIncrement: true });
+    console.log("Object store created: " + STORE_NAME);
   };
 
-  request.onupgradeneeded = function(event) {
-    const db = event.target.result;
-    const objectStore = db.createObjectStore(STORE_NAME, { keyPath: "id", autoIncrement: true });
+  request.onsuccess = function(event) {
+    console.log("Database opened successfully");
+    let db = event.target.result;
+    displayImages(db, STORE_NAME); // 保存された画像を表示
   };
 }
 
 // 画像を保存する関数
 function saveImage() {
+  let prebox = ""
+  var array = JSON.parse(localStorage.getItem("myArray3"))
+                for (var k in array){
+                    if(array[k]==true){
+                      prebox=k   //preboxでユーザが今訪問してる県のページのキーを取得               
+                    }
+                  }
   //まず日付やメモ、画像があるかどうか確認
   const visit_count = document.getElementById('count')
   const check_str = document.getElementById('memo')
@@ -41,7 +55,7 @@ function saveImage() {
     return
   }
   //ここから画像の保存
-  const dbRequest = indexedDB.open("imageDB");
+  const dbRequest = indexedDB.open(prebox);
   dbRequest.onsuccess = function(event) {
     const db = dbRequest.result;
     const fileInput = document.getElementById("inputfile");
@@ -70,8 +84,7 @@ function saveImage() {
 }
 // 画像をデータベースに追加する関数
 function addImage(db, blob,strings,date) {
-  const DB_NAME = "imageDB";
-  const STORE_NAME = "images";
+  let STORE_NAME = "images";
   const transaction = db.transaction([STORE_NAME], "readwrite");
   const objectStore = transaction.objectStore(STORE_NAME);
 
@@ -83,7 +96,7 @@ function addImage(db, blob,strings,date) {
 
   request.onsuccess = function(event) {
     console.log("Image added to the database");
-    window.location.href='memory.html'
+    location.reload();
    // displayImages(db); // 画像を表示する
   };
 
@@ -93,12 +106,9 @@ function addImage(db, blob,strings,date) {
 }
 
 // 保存された画像を表示する関数（memory.htmlを開いた後に呼び出される）
-function displayImages(db) {
+function displayImages(db, STORE_NAME) {
   var count = 0;
-  const STORE_NAME = "images";
-  const STORE_NAME2 = "strings";
   const objectStore_image = db.transaction(STORE_NAME).objectStore(STORE_NAME);
-  const objectStore_str = db.transaction(STORE_NAME2).objectStore(STORE_NAME2);
   //const imageContainer = document.getElementById('imageContainer');
    //   imageContainer.innerHTML = '';
 
