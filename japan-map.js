@@ -1,12 +1,17 @@
 //localStorage.clear()//リセット用
 /*
 arrayは訪問の有無を確認する配列の初期化
-array2は各都道府県において1（訪問済み）であった場合に色を塗り、0（未訪問）の場合はグレーに塗るといった動作を行うための配列
+array2は各都道府県において1（訪問済み）であった場合に色を塗り、0（未訪問）の場合はグレーに塗るといった動作を行うための配列（数字の大きさによって濃さを変えた）
 array3はどの都道府県をクリックしたかを記録するための配列（※trueになっているところはユーザが訪問している場所を示す）
+VisitArrayは今のところ無関係、無視してよい
 */
 if(window.localStorage) {
     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
     localStorage.setItem("myArray", JSON.stringify(array));
+    let check_myArray2 = JSON.parse(localStorage.getItem("myArray2"));
+    if(!check_myArray2){
+        localStorage.setItem("myArray2", JSON.stringify(array));
+    }
 } else {
     alert('localStorageが使えません。');
   }
@@ -419,7 +424,8 @@ $('.edit').click(function() {
 $('#box1').on('inview', function(event, isInView) {
 	if (isInView) {
         var array_find = JSON.parse(localStorage.getItem("myArray2"))
-        let count_find = Object.values(array_find).filter(value => value === 1).length;
+        console.log(array_find)
+        let count_find = Object.values(array_find).filter(value => value !== 0).length;
         let countdown_find = 47-count_find
 		//要素が見えたときに実行する処理
 		$("#box1 .count-up").each(function(){
