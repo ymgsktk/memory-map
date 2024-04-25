@@ -1,12 +1,32 @@
 //localStorage.clear()//リセット用
 /*
 arrayは訪問の有無を確認する配列の初期化
-array2は各都道府県において1（訪問済み）出会った場合に色を塗り、0（未訪問）の場合はグレーに塗るといった動作を行うための配列
+array2は各都道府県において1（訪問済み）であった場合に色を塗り、0（未訪問）の場合はグレーに塗るといった動作を行うための配列（数字の大きさによって濃さを変えた）
 array3はどの都道府県をクリックしたかを記録するための配列（※trueになっているところはユーザが訪問している場所を示す）
+VisitArrayは今のところ無関係、無視してよい
 */
+
+window.onload = function() {
+    let check_myArray2 = JSON.parse(localStorage.getItem("myArray2"));
+    let prebox = ""
+                var arraydelete = JSON.parse(localStorage.getItem("myArray3"))
+                for (var k in arraydelete){
+                    if(arraydelete[k]==true){
+                      prebox=k   //preboxでユーザが今訪問してる県のページのキーを取得               
+                    }
+                  }
+  let value = check_myArray2[prebox]
+  var visitCountElements = document.getElementById("visit-count");
+  console.log(visitCountElements)
+    visitCountElements.innerText = value;
+}
 if(window.localStorage) {
     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
     localStorage.setItem("myArray", JSON.stringify(array));
+    let check_myArray2 = JSON.parse(localStorage.getItem("myArray2"));
+    if(!check_myArray2){
+        localStorage.setItem("myArray2", JSON.stringify(array));
+    }
 } else {
     alert('localStorageが使えません。');
   }
@@ -68,9 +88,27 @@ $(function(){
         if(array2[k]==0){
             area[i].color = "gray"
             i++
-        }else{
+        }else if(array2[k]=="1"){
+            area[i].hoverColor = "#b8f1b8"
+            area[i].color = "#dcf8dc" 
+            i++
+        }else if(array2[k]=="2"){
+            area[i].hoverColor = "#72e272"
+            area[i].color =  "#95ea95"
+            i++
+        }else if(array2[k]=="3"){
+            area[i].hoverColor = "#2bd52b"
+            area[i].color =  "#4edc4e"  
+            i++
+        }else if(array2[k]=="4"){
+            area[i].hoverColor = "#1d8d1d"
+            area[i].color =  "#23b123"   
+            i++
+        }else if(array2[k]=="多数"){
             area[i].hoverColor = "darkgreen"
-            area[i].color = "green"
+            area[i].color =  "#1d8d1d"  
+            area[i].strokeColor = "#ffff00"
+            area[i].strokeWidth = 100;
             i++
         }
     }
@@ -88,251 +126,273 @@ $(function(){
                 case "北海道" :
                     var array = {北海道:true,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_hokkaido.html'
                     break;
                 case "青森県" :
                     var array = {北海道:0,青森県:true,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_aomori.html'
                     break;
                 case "岩手県" :
                     var array = {北海道:0,青森県:0,岩手県:true,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_iwate.html'
                     break;
                 case "宮城県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:true,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_miyagi.html'
                     break;
                 case "秋田県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:true,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_akita.html'
                     break;
                 case "山形県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:true,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_yamagata.html'
                     break;
                 case "福島県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:true,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_hukusima.html'
                     break;
                 case "茨城県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:true,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_ibaragi.html'
                     break;
                 case "栃木県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:true,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_totigi.html'
                     break;
                 case "群馬県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:true,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_gunma.html'
                     break;
                 case "埼玉県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:true,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_saitama.html'
                     break;
                 case "千葉県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:true,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_tiba.html'
                     break;
                 case "東京都" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:true,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_tokyo.html'
                     break;
                 case "神奈川県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:true,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_kanagawa.html'
                     break;
                 case "新潟県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:true,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_niigata.html'
                     break;
                 case "富山県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:true,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_toyama.html'
                     break;
                 case "石川県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:true,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_isikawa.html'
                     break;
                 case "福井県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:true,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_hukui.html'
                     break;
                 case "山梨県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:true,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_yamanasi.html'
                     break;
                 case "長野県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:true,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_nagano.html'
                     break;
                 case "岐阜県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:true,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_gihu.html'
                     break;
                 case "静岡県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:true,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_sizuoka.html'
                     break;
                 case "愛知県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:true,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_aiti.html'
                     break;
                 case "三重県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:true,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_mie.html'
                     break;
                 case "滋賀県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:true,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_siga.html'
                     break;
                 case "京都府" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:true,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_kyoto.html'
                     break;
                 case "大阪府" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:true,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_osaka.html'
                     break;
                 case "兵庫県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:true,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_hyogo.html'
                     break;
                 case "奈良県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:true,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_nara.html'
                     break;
                 case "和歌山県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:true,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_wakayama.html'
                     break;
                 case "鳥取県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:true,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_tottori.html'
                     break;
                 case "島根県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:true,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_simane.html'
                     break;
                 case "岡山県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:true,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_okayama.html'
                     break;
                 case "広島県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:true,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_hirosima.html'
                     break;
                 case "山口県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:true,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_yamaguti.html'
                     break;
                 case "徳島県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:true,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_tokusima.html'
                     break;
                 case "香川県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:true,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_kagawa.html'
                     break;
                 case "愛媛県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:true,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_ehime.html'
                     break;
                 case "高知県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:true,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_kouti.html'
                     break;
                 case "福岡県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:true,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_hukuoka.html'
                     break;
                 case "佐賀県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:true,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_saga.html'
                     break;
                 case "長崎県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:true,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_nagasaki.html'
                     break;
                 case "熊本県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:true,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_kumamoto.html'
                     break;
                 case "大分県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:true,宮崎県:0,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_oita.html'
                     break;
                 case "宮崎県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:true,鹿児島県:0,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_miyazaki.html'
                     break;
                 case "鹿児島県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:true,沖縄県:0}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_kagosima.html'
                     break;
                 case "沖縄県" :
                     var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:true}
                     localStorage.setItem("myArray3", JSON.stringify(array));
-                    window.location.href='memory.html'
+                    window.location.href='memory_okinawa.html'
                     break;
             }
         }
         
     });
+    $('.editbutton').click(function(event) {
+        event.preventDefault();
+        switch($(this).attr("id")) {
+            case "alldelete":
+                var result = window.confirm('訪問済みの都道府県を全て未訪問にしますか？');
+                if( result ) {
+                    var array = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
+                    localStorage.setItem("myArray2", JSON.stringify(array));
+                }
+                else {
+                    console.log('キャンセルがクリックされました');
+                }
+                window.location.href='index.html'
+            break;
+            }
+        }
+    );
 
-
-    $('.editbutton').click(function() {
+    
+    $('a.btn-border').click(function(event) {
+        event.preventDefault();
         switch($(this).attr("id")) {
             case "plus"://新規追加のボタンが押されたら、array3を調査し、該当する都道府県の値をtrueから1に変える
+                let selectElement = document.getElementById("count");         
+                let selectedValue = selectElement.value; 
+                var visitarray = {北海道:0,青森県:0,岩手県:0,宮城県:0,秋田県:0,山形県:0,福島県:0,茨木県:0,栃木県:0,群馬県:0,埼玉県:0,千葉県:0,東京都:0,神奈川県:0,新潟県:0,富山県:0,石川県:0,福井県:0,山梨県:0,長野県:0,岐阜県:0,静岡県:0,愛知県:0,三重県:0,滋賀県:0,京都府:0,大阪府:0,兵庫県:0,奈良県:0,和歌山県:0,鳥取県:0,島根県:0,岡山県:0,広島県:0,山口県:0,徳島県:0,香川県:0,愛媛県:0,高知県:0,福岡県:0,佐賀県:0,長崎県:0,熊本県:0,大分県:0,宮崎県:0,鹿児島県:0,沖縄県:0}
+                localStorage.setItem("VisitArray", JSON.stringify(visitarray));
                 var array3 = JSON.parse(localStorage.getItem("myArray3"))
                 for (var k in array3){
                     if(array3[k]==true){
-                        array2[k] = 1
+                        array2[k] = selectedValue
                         localStorage.setItem('myArray2', JSON.stringify(array2));
                     }else{
                     }
@@ -342,7 +402,27 @@ $(function(){
             case "edit":
               c = a - b;
               break;
-            case "delete":
+            case "delete"://記録削除ボタンが押されたらその県のオブジェクトストアを削除する
+                let prebox = ""
+                var arraydelete = JSON.parse(localStorage.getItem("myArray3"))
+                for (var k in arraydelete){
+                    if(arraydelete[k]==true){
+                      prebox=k   //preboxでユーザが今訪問してる県のページのキーを取得               
+                    }
+                  }
+                const request = indexedDB.open(prebox);
+
+                request.onsuccess = function(event) {
+                const db = event.target.result;
+                    
+                    // トランザクションを開始し、ストアを取得します
+                const transaction = db.transaction(["images"], "readwrite");
+                const objectStore = transaction.objectStore("images");
+                    
+                    // ストアを削除します
+                const deleteRequest = objectStore.clear();
+                }
+
                 var array3 = JSON.parse(localStorage.getItem("myArray3"))
                 for (var k in array3){
                     if(array3[k]==true){
@@ -376,7 +456,8 @@ $('.edit').click(function() {
 $('#box1').on('inview', function(event, isInView) {
 	if (isInView) {
         var array_find = JSON.parse(localStorage.getItem("myArray2"))
-        let count_find = Object.values(array_find).filter(value => value === 1).length;
+        console.log(array_find)
+        let count_find = Object.values(array_find).filter(value => value !== 0).length;
         let countdown_find = 47-count_find
 		//要素が見えたときに実行する処理
 		$("#box1 .count-up").each(function(){
@@ -441,3 +522,4 @@ var access = $.cookie('access')
 	}
 	});
 
+$
