@@ -50,6 +50,8 @@ function saveImage() {
   let visit = visit_count.value
   const visitCountElement = document.getElementById('visit-count');
         visitCountElement.textContent = visit;
+        
+
   if(check_date.value == ""|| check_str.value == ""){
     error_date.textContent = '※入力必須項目です'
     return
